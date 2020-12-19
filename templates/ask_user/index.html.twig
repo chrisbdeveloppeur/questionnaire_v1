@@ -3,10 +3,10 @@
 {% block title %}Hello AskUserController!{% endblock %}
 
 {% block body %}
-    <section class="hero is-info is-fullheight">
+    <section class="hero is-dark is-bold is-fullheight">
         <div class="hero-body">
 
-            {{ include('includes/flash_message.html.twig') }}
+
 
             <div class="control prevBtn" id="prevBtn">
                 <a href="#" class="arrowNavForm">
@@ -20,46 +20,52 @@
                 </a>
             </div>
 
+            {{ include('includes/flash_message.html.twig') }}
+
                         {{ form_start(questionnaire_form, {'attr' : {'class' : 'block-form-field'} }) }}
 
-                        <div class="field form-field current-form-field first-form-field">
-                            <label class="label" for="last_name">Votre Nom de famille</label>
+                        <div class="field form-field current-form-field first-form-field is-one-third is-full-touch column">
+                            <label class="label has-text-light" for="last_name">Votre Nom de famille</label>
                             <div class="control">
                                 {{ form_widget(questionnaire_form.last_name, {'attr' : {'class' : 'input is-primary', 'placeholder' : 'Mon nom', 'name' : 'last_name'} } ) }}
                             </div>
                         </div>
 
 
-                            <div class="field form-field">
-                                <label class="label" for="first_name">Votre Prénom</label>
+                            <div class="field form-field is-one-third is-full-touch column">
+                                <label class="label has-text-light" for="first_name">Votre Prénom</label>
                                 <div class="control">
                                     {{ form_widget(questionnaire_form.first_name, {'attr' : {'class' : 'input is-primary', 'placeholder' : 'Mon prénom', 'name' : 'first_name'} } ) }}
                                 </div>
                             </div>
 
-                            <div class="field form-field">
-                                <label class="label" for="age">Votre age</label>
+                            <div class="field form-field is-one-third is-full-touch column">
+                                <label class="label has-text-light" for="age">Votre age</label>
                                 <div class="control">
                                     {{ form_widget(questionnaire_form.age, {'attr' : {'class' : 'input is-primary', 'placeholder' : 'ex: 25', 'name' : 'age'} } ) }}
                                 </div>
                             </div>
 
-                            <div class="field form-field">
-                                <label class="label" for="location">Votre adresse</label>
+                            <div class="field form-field is-one-third is-full-touch column">
+                                <label class="label has-text-light" for="location">Votre adresse</label>
                                 <div class="control">
                                     {{ form_widget(questionnaire_form.location, {'attr' : {'class' : 'input is-primary', 'placeholder' : 'ex: 1 rue de mon adresse, 00000 Ma ville', 'name' : 'location'} } ) }}
                                 </div>
                             </div>
 
-                            <div class="field form-field last-form-field">
-                                <label class="label" for="location">Votre présentation</label>
+                            <div class="field form-field last-form-field is-one-third is-full-touch column">
+                                <label class="label has-text-light" for="location">Votre présentation</label>
                                 <div class="control">
                                     {{ form_widget(questionnaire_form.description, {'attr' : {'class' : 'textarea is-primary', 'placeholder' : 'Présentez-vous ici', 'name' : 'description', 'style' : 'resize:none;margin-bottom:0.75rem'} } ) }}
                                 </div>
                             </div>
 
                             <div class="control" id="validation-btn">
-                                <button class="button is-size-2 is-success">Valider</button>
+                                <button class="button is-size-4 is-success">
+                                    <span class="icon is-large">
+                                        <i class="fas fa-2x fa-check"></i>
+                                    </span>
+                                </button>
                             </div>
 
                          {{ form_end(questionnaire_form) }}
@@ -160,6 +166,8 @@
                 if(!currentFormField.previousElementSibling.previousElementSibling){
                     prevBtn.style.display = 'none';
                 }else {
+                    validationBtn.style.opacity = "0";
+                    validationBtn.style.display = "none";
                     nextBtn.style.display = 'flex';
                     prevBtn.style.display = 'flex';
                 }
