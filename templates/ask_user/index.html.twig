@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AskUserController!{% endblock %}
+
+{% block body %}
+    <section class="hero is-info is-fullheight">
+        <div class="hero-body">
+
+            {{ include('includes/flash_message.html.twig') }}
+
+            <div class="control prevBtn" id="prevBtn">
+                <a href="#" class="arrowNavForm">
+                    <i class="fas fa-chevron-left is-size-1"></i>
+                </a>
+            </div>
+
+            <div class="control nextBtn" id="nextBtn">
+                <a href="#" class="arrowNavForm">
+                    <i class="fas fa-chevron-right is-size-1"></i>
+                </a>
+            </div>
+
+                        {{ form_start(questionnaire_form, {'attr' : {'class' : 'block-form-field'} }) }}
+
+                        <div class="field form-field current-form-field first-form-field">
+                            <label class="label" for="last_name">Votre Nom de famille</label>
+                            <div class="control">
+                                {{ form_widget(questionnaire_form.last_name, {'attr' : {'class' : 'input is-primary', 'placeholder' : 'Mon nom', 'name' : 'last_name'} } ) }}
+                            </div>
+                        </div>
+
+
+                            <div class="field form-field">
+                                <label class="label" for="first_name">Votre Prénom</label>
+                                <div class="control">
+                                    {{ form_widget(questionnaire_form.first_name, {'attr' : {'class' : 'input is-primary', 'placeholder' : 'Mon prénom', 'name' : 'first_name'} } ) }}
+                                </div>
+                            </div>
+
+                            <div class="field form-field">
+                                <label class="label" for="age">Votre age</label>
+                                <div class="control">
+                                    {{ form_widget(questionnaire_form.age, {'attr' : {'class' : 'input is-primary', 'placeholder' : 'ex: 25', 'name' : 'age'} } ) }}
+                                </div>
+                            </div>
+
+                            <div class="field form-field">
+                                <label class="label" for="location">Votre adresse</label>
+                                <div class="control">
+                                    {{ form_widget(questionnaire_form.location, {'attr' : {'class' : 'input is-primary', 'placeholder' : 'ex: 1 rue de mon adresse, 00000 Ma ville', 'name' : 'location'} } ) }}
+                                </div>
+                            </div>
+
+                            <div class="field form-field last-form-field">
+                                <label class="label" for="location">Votre présentation</label>
+                                <div class="control">
+                                    {{ form_widget(questionnaire_form.description, {'attr' : {'class' : 'textarea is-primary', 'placeholder' : 'Présentez-vous ici', 'name' : 'description', 'style' : 'resize:none;margin-bottom:0.75rem'} } ) }}
+                                </div>
+                            </div>
+
+                            <div class="control" id="validation-btn">
+                                <button class="button is-size-2 is-success">Valider</button>
+                            </div>
+
+                         {{ form_end(questionnaire_form) }}
+
+                </div>
+
+    </section>
+
+
+    <script>
+        let formFields = document.querySelectorAll("div.form-field");
+        let nextBtn = document.getElementById('nextBtn');
+        let prevBtn = document.getElementById('prevBtn');
+        let nextFormField;
+        let prevFormField;
+        let validationBtn = document.getElementById("validation-btn");
+
+
+        nextBtn.addEventListener('mouseover', function () {
+            let arrowNavForm = this.querySelector('a.arrowNavForm');
+            arrowNavForm.style.background = "rgba(255,255,255,.2)";
+        });
+        nextBtn.addEventListener('mouseleave', function () {
+            let arrowNavForm = this.querySelector('a.arrowNavForm');
+            arrowNavForm.style.background = "rgba(0,0,0,0)";
+        });
+
+        nextBtn.addEventListener('click', function () {
+            let currentFormField = document.querySelector("div.current-form-field");
+            console.log(currentFormField);
+            console.log(nextFormField);
+            if (currentFormField.nextElementSibling.classList.contains("form-field")) {
+                nextFormField = currentFormField.nextElementSibling;
+                nextFormField.style.transform = 'translate(80vw)';
+                if (currentFormField.classList.contains("last-form-field")){
+                    // console.log();
+                }else {
+                    currentFormField.classList.remove('current-form-field');
+                    currentFormField.style.transform = 'translate(-80vw)';
+                    currentFormField.style.opacity = '0';
+                    setTimeout(function () {
+                        currentFormField.style.display = 'none';
+                    },300);
+
+                    nextFormField.classList.add('current-form-field');
+                    nextFormField.style.display = 'block';
+                    setTimeout(function () {
+                        nextFormField.style.opacity = '1';
+                        nextFormField.style.transform = 'translate(0vw)';
+                    },300);
+                }
+
+                if(currentFormField.nextElementSibling.classList.contains("last-form-field")){
+                    nextBtn.style.display = 'none';
+                    validationBtn.style.display = "flex";
+                    setTimeout(function () {
+                        validationBtn.style.opacity = "1";
+                    },300);
+                }else {
+                    nextBtn.style.display = 'flex';
+                    prevBtn.style.display = 'flex';
+                }
+            }
+
+        });
+
+
+        prevBtn.addEventListener('mouseover', function () {
+            let arrowNavForm = this.querySelector('a.arrowNavForm');
+            arrowNavForm.style.background = "rgba(255,255,255,.2)";
+        });
+        prevBtn.addEventListener('mouseleave', function () {
+            let arrowNavForm = this.querySelector('a.arrowNavForm');
+            arrowNavForm.style.background = "rgba(0,0,0,0)";
+        });
+
+        prevBtn.addEventListener('click', function () {
+            let currentFormField = document.querySelector("div.current-form-field");
+            prevFormField = currentFormField.previousElementSibling;
+            console.log(currentFormField);
+            if (currentFormField.classList.contains("first-form-field")){
+                // console.log("Dernier champ du formulaire");
+            }else {
+                currentFormField.classList.remove('current-form-field');
+                currentFormField.style.transform = 'translate(80vw)';
+                currentFormField.style.opacity = '0';
+                setTimeout(function () {
+                    currentFormField.style.display = 'none';
+                },300);
+
+                prevFormField.classList.add('current-form-field');
+                prevFormField.style.display = 'block';
+                setTimeout(function () {
+                    prevFormField.style.opacity = '1';
+                    prevFormField.style.transform = 'translate(0vw)';
+                },300);
+
+                if(!currentFormField.previousElementSibling.previousElementSibling){
+                    prevBtn.style.display = 'none';
+                }else {
+                    nextBtn.style.display = 'flex';
+                    prevBtn.style.display = 'flex';
+                }
+            }
+        });
+
+        formFields.forEach(function (field) {
+            if (field.classList.contains('current-form-field')){
+                nextFormField = field.nextElementSibling;
+                field.style.display = 'block';
+                field.style.opacity = '1';
+                nextFormField.style.transform = 'translate(80vw)';
+            }else{
+                field.style.transform = 'translate(80vw)';
+            }
+        });
+
+    </script>
+
+{% endblock %}
+
+
